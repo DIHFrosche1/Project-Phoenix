@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 
 
     private CharacterController m_CharacterController;
+    private Camera m_Camera;
     private Vector3 m_MoveDir = Vector3.zero;
     private Vector2 m_Input;
 
@@ -26,12 +27,13 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         m_CharacterController = GetComponent<CharacterController>();
+        m_MouseLook.Init(transform, m_Camera.transform);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        RotateView();
     }
     private void FixedUpdate()
     {
@@ -61,6 +63,10 @@ public class PlayerController : MonoBehaviour
         {
             m_Input.Normalize();
         }
+    }
+    private void RotateView()
+    {
+        m_MouseLook.LookRotation(transform, m_Camera.transform);
     }
    
 }
