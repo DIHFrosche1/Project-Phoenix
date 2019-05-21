@@ -20,6 +20,7 @@ public class CorridorTracker : MonoBehaviour
     public int timesPassedMaxCap;
     public float timeCap;
     public int chanceOfAlertingOnMin; // Out of 100, so 20 is 20%, 50 if 50% and so on.
+    public int chanceModPerPass; // The modification used to increase the likelyhood of the AI being alerted for each additional time you pass a certain point.
     //public int chanceOfAlertingOnMax;
 
     private float timer;
@@ -29,7 +30,7 @@ public class CorridorTracker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -51,7 +52,15 @@ public class CorridorTracker : MonoBehaviour
             }
             else
             {
-                //Random chance of alerting the AI
+                int newChance = ((timesPassed - timesPassedMinCap) * chanceModPerPass) + chanceOfAlertingOnMin;
+                if (rand <= newChance)
+                {
+                    //Alerting the AI
+                }
+                else
+                {
+                    //Don't alert the AI
+                }
             }
         }
     }

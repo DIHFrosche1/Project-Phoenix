@@ -13,11 +13,16 @@ public class AIMovement : MonoBehaviour
     private NavMeshAgent agent;
     [SerializeField]
     private bool patrollingRoom;
-
-
+    public bool test;
+    int whichRoom;
+    bool test2 = true;
+    GameObject macroAI;
     // Start is called before the first frame update
     void Start()
     {
+        macroAI = GameObject.FindGameObjectWithTag("Enemy");
+        MacroAI macroAIScript = macroAI.GetComponent<MacroAI>();
+
         agent = GetComponent<NavMeshAgent>();
         rooms = GameObject.FindGameObjectsWithTag("Room");
     }
@@ -25,6 +30,11 @@ public class AIMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (macroAI.GetComponent<MacroAI>().currentState == MacroAI.States.Wandering && test2 == true)
+        {
+            Debug.Log("It's alive");
+            test2 = false;
+        }
 
         Debug.Log(AiDestination);
 
@@ -59,10 +69,7 @@ public class AIMovement : MonoBehaviour
 
     Vector3 GetRandomPosInsideBox(Vector3 center, Vector3 size)
     {
-        Vector3 rndP = new Vector3(
-            size.x * (UnityEngine.Random.value - .5f),
-            0,
-            size.z * (UnityEngine.Random.value - .5f));
+        Vector3 rndP = new Vector3(size.x * (UnityEngine.Random.value - .5f), 0, size.z * (UnityEngine.Random.value - .5f));
         return center + rndP;
 
     }
