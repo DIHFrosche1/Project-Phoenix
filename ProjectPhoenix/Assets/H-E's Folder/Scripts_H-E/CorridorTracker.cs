@@ -15,14 +15,15 @@ using UnityEngine;
 public class CorridorTracker : MonoBehaviour
 {
 
-    public int timesPassed;
     public int timesPassedMinCap;
     public int timesPassedMaxCap;
     public float timeCap;
     public int chanceOfAlertingOnMin; // Out of 100, so 20 is 20%, 50 if 50% and so on.
     public int chanceModPerPass; // The modification used to increase the likelyhood of the AI being alerted for each additional time you pass a certain point.
     //public int chanceOfAlertingOnMax;
+    public bool checkDone = false;
 
+    private int timesPassed;
     private float timer;
     private int rand;
 
@@ -44,21 +45,28 @@ public class CorridorTracker : MonoBehaviour
             timer = 0;
         }
 
-        if (timesPassed >= timesPassedMinCap)
+        if (timesPassed >= timesPassedMinCap && checkDone == false)
         {
+            checkDone = true;
             if (timesPassed >= timesPassedMaxCap)
             {
+                Debug.Log("100% here");
+                
                 //Alert the AI
             }
             else
             {
                 int newChance = ((timesPassed - timesPassedMinCap) * chanceModPerPass) + chanceOfAlertingOnMin;
+                Debug.Log(newChance);
                 if (rand <= newChance)
                 {
+                    
                     //Alerting the AI
+                    Debug.Log("Alert");
                 }
                 else
                 {
+                    Debug.Log("No Alert");
                     //Don't alert the AI
                 }
             }
@@ -68,6 +76,7 @@ public class CorridorTracker : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         timesPassed++;
+        checkDone = false;
         timer = 0;
         rand = Random.Range(0, 100);
     }

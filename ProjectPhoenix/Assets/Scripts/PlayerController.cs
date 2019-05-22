@@ -11,7 +11,8 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField]
     private float m_WalkSpeed;
-    [SerializeField] private MouseLook m_MouseLook;
+    [SerializeField]
+    private MouseLook m_MouseLook;
 
 
 
